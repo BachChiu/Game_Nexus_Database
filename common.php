@@ -8,4 +8,23 @@ function getDB()
 
     return new mysqli($host,$username,$password,$database);
 }
+function checkUser($userToBeCheck)
+{
+    $db = getDB();
+    $sql = "SELECT userID FROM users WHERE userID=?";
+    $statement = $db->prepare($sql);
+    $statement->bind_param("s",$userToBeCheck);
+    $statement->execute();
+    $intermediate = $statement->get_result();
+    $result = $intermediate->fetch_assoc();
+    $db->close();
+    if(!$result)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
 ?>

@@ -6,15 +6,8 @@
     {
         $username = $_POST['username'];
         $pass = $_POST['password'];
-        $db = getDB();
-        $sql = "SELECT userID FROM users WHERE userID=?";
-        $statement = $db->prepare($sql);
-        $statement->bind_param("s",$username);
-        $statement->execute();
-        $intermediate = $statement->get_result();
-        $result = $intermediate->fetch_assoc();
-        $db->close();
-        if(!$result)
+        $valid = checkUser($username);
+        if(!$valid)
         {
             $_SESSION['error'] = 'Invalid username';
             header('Location: ./login.php');
