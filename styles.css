@@ -134,6 +134,15 @@ ul li {
     background-color: #c0392b;
 }
 
+.error {
+    color: red;
+    font-size: 0.875rem;
+}
+.success {
+    color: green;
+    font-size: 0.875rem;
+}
+
 /* Footer */
 footer {
     text-align: center;

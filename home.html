@@ -2,6 +2,7 @@
     <head>
         <title>Game Database Application</title>
         <link rel="stylesheet" href="styles.css">
+        
     </head>
     <body>
             
@@ -17,7 +18,7 @@
          </nav>
 
          <!-- Main Section-->
-          <main>
+    <main>
                 <section id="introduction">
                     <h1>Welcome to the Game Database Application</h1>
                     <p>
@@ -26,28 +27,30 @@
                         your favorite games and receive personalized recommendations.
                     </p>
                 </section>
-          </main>
+          
 
           <!-- User Registration -->
-        <section id="register">
+        
+        <section id="registerForm">
             <h2>Register</h2>
             <p>Already have an account? <a href="login.php">Login Here</a>.</p>
 
-            <form id="registerForm" action="register.php" method="POST">
+            <form id="registerForm" action="#" method="POST">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="text" id="email" name="email" required>
                 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
-                <label for="password">Confirm Password:</label>
-                <input type="confirm password" id="confirm password" name="confirm password" required>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span id="passwordError" class="error"></span>
                 
                 
-                <button type="submit">Register</button>
+                <button type="submit" class="submit" id="submit" disabled>Register</button>
             </form>
         </section>
 
@@ -103,6 +106,8 @@
     <footer>
         <p>&copy; 2024 Game Database Application. All rights reserved.</p>
     </footer>
+
+    <script src="validatePassword.js"></script>
 
     </body>
 </html>
