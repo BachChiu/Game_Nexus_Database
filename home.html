@@ -39,6 +39,9 @@
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                 
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+                
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
@@ -57,7 +60,6 @@
             <form id="searchForm" action="/search" method="GET">
                 <label for="searchBar">Search by Title:</label>
                 <input type="text" id="searchBar" name="searchBar" placeholder="Enter game title">
-                
                 <label for="genre">Filter by Genre:</label>
                 <select id="genre" name="genre">
                     <option value="all">All Genres</option>
@@ -81,21 +83,9 @@
         </section>
 
         <!-- User's Game List -->
-        <section id="gameList">
-            <h2>Your Game List</h2>
-            <p>Manage the games in your list below:</p>
-            <ul id="userGameList">
-                <!-- Dynamically generated list of user's games -->
-            </ul>
-            <button id="clearListBtn">Clear List</button>
-        </section>
-
-        <!-- Recommendations -->
-        <section id="recommendations">
-            <h2>Recommended Games for You</h2>
-            <ul id="recommendationsList">
-                <!-- Dynamically generated list of recommended games -->
-            </ul>
+        <section id="popular_games">
+            <h2>Popular Games</h2>
+            
         </section>
     </main>
 
