@@ -1,64 +1,53 @@
-<html>
-    <head>
-        <title>Game Database Application</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-            
-        <!-- Navigation bar-->
-         <nav>
-                <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="#">My Games List</a></li>
-                    <li><a href="#">Recommendations</a></li>
-                    <li><a href="#">Profile</a></li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Database Application</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="games.html">My Games List</a></li>
+                <li><a href="recomm.html">Recommendations</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li class="search-bar">
                     <input type="text" placeholder="Search Games...">
-                </ul>
-         </nav>
+                    <button type="submit">Search</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-         <!-- Main Section-->
-          <main>
-                <section id="introduction">
-                    <h1>Welcome to the Game Database Application</h1>
-                    <p>
-                        Our application allows users to find games across all platforms that match their preferences.
-                        Use the search feature to filter games by genre, platform, and more. Create an account to save
-                        your favorite games and receive personalized recommendations.
-                    </p>
-                </section>
-          </main>
+    <main class="container">
+        <section id="introduction" class="card">
+            <h1>Welcome to the Game Database Application</h1>
+            <p>
+                Our application allows users to find games across all platforms that match their preferences.
+                Use the search feature to filter games by genre, platform, and more. Create an account to save
+                your favorite games and receive personalized recommendations.
+            </p>
+        </section>
 
-          <!-- User Registration -->
-        <section id="register">
+        <section id="register" class="card">
             <h2>Register</h2>
-            <p>Already have an account? <a href="login.php">Login Here</a>.</p>
-
+            <p>Already have an account? <a href="login.html">Login Here</a>.</p>
             <form id="registerForm" action="register.php" method="POST">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-
-                <label for="password">Confirm Password:</label>
-                <input type="confirm password" id="confirm password" name="confirm password" required>
-                
-                
-                <button type="submit">Register</button>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                <button type="submit" class="btn">Register</button>
             </form>
         </section>
 
-        <!-- Game Search -->
-        <section id="search">
+        <section id="search" class="card">
             <h2>Search for Games</h2>
             <form id="searchForm" action="/search" method="GET">
-                <label for="searchBar">Search by Title:</label>
                 <input type="text" id="searchBar" name="searchBar" placeholder="Enter game title">
-                
-                <label for="genre">Filter by Genre:</label>
                 <select id="genre" name="genre">
                     <option value="all">All Genres</option>
                     <option value="action">Action</option>
@@ -66,8 +55,6 @@
                     <option value="rpg">RPG</option>
                     <option value="strategy">Strategy</option>
                 </select>
-
-                <label for="platform">Filter by Platform:</label>
                 <select id="platform" name="platform">
                     <option value="all">All Platforms</option>
                     <option value="pc">PC</option>
@@ -75,34 +62,13 @@
                     <option value="playstation">PlayStation</option>
                     <option value="switch">Nintendo Switch</option>
                 </select>
-
-                <button type="submit">Search</button>
+                <button type="submit" class="btn">Search</button>
             </form>
-        </section>
-
-        <!-- User's Game List -->
-        <section id="gameList">
-            <h2>Your Game List</h2>
-            <p>Manage the games in your list below:</p>
-            <ul id="userGameList">
-                <!-- Dynamically generated list of user's games -->
-            </ul>
-            <button id="clearListBtn">Clear List</button>
-        </section>
-
-        <!-- Recommendations -->
-        <section id="recommendations">
-            <h2>Recommended Games for You</h2>
-            <ul id="recommendationsList">
-                <!-- Dynamically generated list of recommended games -->
-            </ul>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2024 Game Database Application. All rights reserved.</p>
     </footer>
-
-    </body>
+</body>
 </html>
