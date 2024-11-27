@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Games List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="games.html">My Games List</a></li>
+                <li><a href="recomm.html">Recommendations</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li class="search-bar">
+                    <input type="text" placeholder="Search Games...">
+                    <button type="submit">Search</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
+    <main class="container">
+        <section>
+            <h1>My Games List</h1>
+            <p>Your curated list of games. Manage your favorites, track progress, and get updates on games you love.</p>
+        </section>
+
+        <section id="gamesSection" class="card">
+            <h2>Your Games</h2>
+            <ul id="gamesList">
+                <li class="game-item">
+                    <h3>The Legend of Zelda: Breath of the Wild</h3>
+                    <p><strong>Platform:</strong> Nintendo Switch</p>
+                    <button class="btn remove-btn">Remove</button>
+                </li>
+                <li class="game-item">
+                    <h3>Horizon Forbidden West</h3>
+                    <p><strong>Platform:</strong> PlayStation</p>
+                    <button class="btn remove-btn">Remove</button>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Game Database Application. Keep playing and keep slaying!</p>
+    </footer>
+</body>
+</html>
