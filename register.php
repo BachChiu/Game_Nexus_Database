@@ -24,13 +24,13 @@
             else
             {
                 $_SESSION['error'] = 'The username is already being used, please try again';
-                header('Location: ./home.html');
+                header('Location: ./home.php');
             }
         }
         else
         {
             $_SESSION['error'] = 'The passwords did not match each other, please try again';
-            header('Location: ./home.html');
+            header('Location: ./home.php');
         }
     }
 ?>

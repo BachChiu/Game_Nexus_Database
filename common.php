@@ -27,4 +27,15 @@ function checkUser($userToBeCheck)
         return true;
     }
 }
+function printGame($inputRow)
+{
+    echo "
+    <tr>
+        <th>". $inputRow["gameName"]."</th>
+        <th>". $inputRow["releaseDate"]."</th>
+        <th>". $inputRow["reviews"]."</th>
+        <th>". $inputRow["rating"]."</th>
+        <th>". $inputRow["descriptions"]."</th>
+    </tr>";
+}
 ?>
