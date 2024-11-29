@@ -14,19 +14,11 @@
         }
         else
         {
-            $db = getDB();
-            $sql = "SELECT userPass FROM users WHERE userID =?";
-            $statement = $db->prepare($sql);
-            $statement->bind_param("s",$username);
-            $statement->execute();
-            $intermediate = $statement->get_result();
-            $result = $intermediate->fetch_assoc();
-            $actualPass = $result["userPass"];
-            $db->close();
+            $actualPass = getPassword($username);
             if(strcmp($pass, $actualPass) == 0)
             {
                 $_SESSION['user_authentication'] = $username;
-                header('Location: ./profile.html');
+                header('Location: ./profile.php');
             }
             else
             {

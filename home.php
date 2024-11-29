@@ -1,6 +1,14 @@
 <?php
     session_start();
     require('./common.php');
+    if(isset($_SESSION['user_authentication']) AND $_SESSION['user_authentication'] != '')
+    {
+        $currentUser = $_SESSION['user_authentication'];
+    }
+    else
+    {
+        $currentUser = ''; 
+    }
     if(isset($_POST["genre"]) AND $_POST["genre"] !='')
     {
         $genreFilter = (string) $_POST["genre"];
@@ -60,7 +68,7 @@
                     <li><a href="home.php">Home</a></li>
                     <li><a href="#">My Games List</a></li>
                     <li><a href="#">Recommendations</a></li>
-                    <li><a href="#">Profile</a></li>
+                    <li><a href="profile.php">Profile</a></li>
                     <input type="text" placeholder="Search Games...">
                 </ul>
          </nav>
@@ -92,7 +100,7 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
-                <label for="password">Confirm Password:</label>
+                <label for="passConfirmation">Confirm Password:</label>
                 <input type="password" id="passConfirmation" name="passConfirmation" required>
                 
                 
@@ -207,7 +215,7 @@
                 {
                     if($allGenre AND $allPlatform)
                     {
-                        $searchSql.= " ORDER BY reviews DESC, rating DESC, releaseDate DESC";
+                        $searchSql.= " ORDER BY reviews DESC, rating DESC, releaseDate DESC LIMIT 10000";
                         $gameList = $db->query($searchSql);
                         while($result = $gameList->fetch_assoc())
                         {

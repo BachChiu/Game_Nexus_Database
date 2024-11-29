@@ -1,12 +1,7 @@
 <?php
 function getDB()
 {
-    $host = "75.40.51.27";
-    $username = "gameNexusUser";
-    $password = "Boon1/3Noob";
-    $database = "game_nexus";
-
-    return new mysqli($host,$username,$password,$database);
+    //Implementation hidden due to sensitive data, the program works on the actual hosted site though.
 }
 function checkUser($userToBeCheck)
 {
@@ -26,6 +21,18 @@ function checkUser($userToBeCheck)
     {
         return true;
     }
+}
+function getPassword($currentUser)
+{
+    $db = getDB();
+    $sql = "SELECT userPass FROM users WHERE userID =?";
+    $statement = $db->prepare($sql);
+    $statement->bind_param("s",$currentUser);
+    $statement->execute();
+    $intermediate = $statement->get_result();
+    $result = $intermediate->fetch_assoc();
+    $db->close();
+    return $result["userPass"];
 }
 function printGame($inputRow)
 {
