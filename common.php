@@ -1,7 +1,7 @@
 <?php
 function getDB()
 {
-    //Implementation hidden due to sensitive data, the program works on the actual hosted site though.
+    //Implementation hidden due to sensitive data, the program works on the actual hosted site (http://75.40.51.27/Game_Nexus_Database/home.php)
 }
 function checkUser($userToBeCheck)
 {
