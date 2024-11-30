@@ -29,7 +29,7 @@
         <div class="container">
             <ul>
                 <li><a href="home.php">Home</a></li>
-                <li><a href="games.html">My Games List</a></li>
+                <li><a href="personalGames.php">My Games List</a></li>
                 <li><a href="recomm.html">Recommendations</a></li>
                 <li><a href="profile.php">Profile</a></li>
             </ul>
