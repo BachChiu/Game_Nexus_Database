@@ -5,7 +5,8 @@ if (isset($_SESSION['user_authentication']) and $_SESSION['user_authentication']
     $currentUser = $_SESSION['user_authentication'];
 } else {
     $currentUser = '';
-    header('Location: ./home.php');
+    $_SESSION['error'] = 'Please login to access your personal game list.';
+    header('Location: ./login.php');
 }
 if(isset($_POST["gameID"]))
 {

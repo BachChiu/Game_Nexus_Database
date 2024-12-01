@@ -20,7 +20,7 @@
 <body>
 	<section id="login">
 		<h2>Login</h2>
-		<p>Don't have an account? <a href="home.html">Register Here</a>.</p>
+		<p>Don't have an account? <a href="home.php">Register Here</a>.</p>
 		
 		<form id="loginForm" action="login_submit.php" method="post">
 			<label for="username">Username:</label>

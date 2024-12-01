@@ -36,6 +36,32 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
 } else {
     $searchAvailable = false;
 }
+if(isset($_POST["favoriteGameID"]))
+{
+    $gameID = intval($_POST["favoriteGameID"]);
+    $db = getDB();
+    $sql = "SELECT userID, gameID FROM favorite WHERE userID=? AND gameID=?";
+    $statement= $db->prepare($sql);
+    $statement->bind_param("si", $currentUser, $gameID);
+    $statement->execute();
+    $intermediate= $statement->get_result();
+    $result = $intermediate->fetch_assoc();
+    $added = false;
+    if(!$result)
+    {
+        $addToFavorite = "INSERT INTO favorite (userID, gameID) VALUES (?,?)";
+        $favoriteStatement = $db->prepare($addToFavorite);
+        $favoriteStatement->bind_param("si", $currentUser, $gameID);
+        $favoriteStatement->execute();
+        $added = true;
+    }
+    else
+    {
+        $added = false;
+    }
+    $db->close();
+}
+
 ?>
 <html>
 
@@ -46,6 +72,16 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
 
 <body>
     <div id="homeContent">
+        <?php if(isset($_POST["favoriteGameID"]) AND $added)
+        {
+            unset($_POST["favoriteGameID"]);
+            echo "<script>alert('Game has been added to your game list.');</script>";
+        }
+        else if(isset($_POST["favoriteGameID"]))
+        {
+            unset($_POST["favoriteGameID"]);
+            echo "<script>alert('This game is already in your game list.');</script>";
+        }?>
         <!-- Navigation bar-->
         <nav>
             <ul>
@@ -132,7 +168,7 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
         </section>
         <?php
         $db = getDB();
-        $searchSql = "SELECT DISTINCT gameName, releaseDate, reviews, rating, descriptions FROM games ";
+        $searchSql = "SELECT DISTINCT games.gameID, gameName, releaseDate, reviews, rating, descriptions FROM games ";
         echo "
                 <table>
                     <tr>
@@ -183,7 +219,7 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
             }
         } else {
             if ($allGenre and $allPlatform) {
-                $searchSql .= " ORDER BY reviews DESC, rating DESC, releaseDate DESC LIMIT 10000";
+                $searchSql .= " ORDER BY reviews DESC, rating DESC, releaseDate DESC LIMIT 10000";//Limited due to memory issue
                 $gameList = $db->query($searchSql);
                 while ($result = $gameList->fetch_assoc()) {
                     printGame($result);
@@ -259,6 +295,26 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
                         $('#homeContent').html(response);
                     },
                     error: function (xhr, status, error) {
+                        console.error('AJAX Error: ' + error);
+                    }
+                });
+            });
+            $('.favoriteBtn').click(function (event)
+            {
+                var buttonID = $(this).val();
+                $.ajax({
+                    url: 'home.php',
+                    method: 'POST',
+                    data: {favoriteGameID: buttonID,
+                        genre: "<?php echo $genreFilter; ?>",
+                        platform: "<?php echo $platformFilter; ?>",
+                        searchBar: "<?php echo $searchBar; ?>"
+                    },
+                    success: function (response) {
+                        $('#homeContent').html(response);
+                    },
+                    error: function (xhr, status, error)
+                    {
                         console.error('AJAX Error: ' + error);
                     }
                 });

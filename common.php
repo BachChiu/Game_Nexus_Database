@@ -38,11 +38,12 @@ function printGame($inputRow)
 {
     echo "
     <tr>
-        <th>". $inputRow["gameName"]."</th>
-        <th>". $inputRow["releaseDate"]."</th>
-        <th>". $inputRow["reviews"]."</th>
-        <th>". $inputRow["rating"]."</th>
-        <th>". $inputRow["descriptions"]."</th>
+        <td>". $inputRow["gameName"]."</td>
+        <td>". $inputRow["releaseDate"]."</td>
+        <td>". $inputRow["reviews"]."</td>
+        <td>". $inputRow["rating"]."</td>
+        <td>". $inputRow["descriptions"]."</td>
+        <td><button class='btn favoriteBtn' name='favoriteGameID' value=". $inputRow["gameID"].">Add to your game list</button></td>
     </tr>";
 }
 ?>
