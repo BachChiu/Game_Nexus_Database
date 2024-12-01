@@ -104,6 +104,14 @@ button {
     cursor: pointer;
 }
 
+button.enabled {
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc; /* Gray when disabled */
+    cursor: not-allowed;
+}
 button:hover {
     background-color: #2980b9;
 }

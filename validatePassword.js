@@ -1,11 +1,19 @@
-document.getElementById('registerForm').addEventListener('input', function () {
+document.addEventListener('DOMContentLoaded', function () {
+    const registerForm = document.getElementById('registerForm');
+    registerForm.addEventListener('input', function () {
+        validateForm();
+    });
+
+    // Initial form validation on page load
     validateForm();
 });
+
+validateForm();
 
 function validateForm() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    const confirmPassword = document.getElementById('passConfirmation').value;
     const submit = document.getElementById('submit');
     const errorElement = document.getElementById('passwordError');
 
