@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Games List</title>
+    <title>XP Vault - Game Recommendations</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="moving-background">
     <nav>
         <div class="container">
             <ul>
@@ -22,31 +22,43 @@
         </div>
     </nav>
 
-    <main class="container">
-        <section>
-            <h1>My Games List</h1>
-            <p>Your curated list of games. Manage your favorites, track progress, and get updates on games you love.</p>
-        </section>
+    <header>
+        <h1 class="site-title">XP Vault</h1>
+    </header>
 
-        <section id="gamesSection" class="card">
-            <h2>Your Games</h2>
-            <ul id="gamesList">
-                <li class="game-item">
-                    <h3>The Legend of Zelda: Breath of the Wild</h3>
-                    <p><strong>Platform:</strong> Nintendo Switch</p>
-                    <button class="btn remove-btn">Remove</button>
-                </li>
-                <li class="game-item">
-                    <h3>Horizon Forbidden West</h3>
-                    <p><strong>Platform:</strong> PlayStation</p>
-                    <button class="btn remove-btn">Remove</button>
-                </li>
-            </ul>
-        </section>
-    </main>
+    <div class="container">
+        <main>
+            <section>
+                <h2>Game Recommendations</h2>
+                <p>Explore games you might enjoy based on your preferences. Add them to your list and start playing!</p>
+            </section>
+
+            <section id="recommendationsSection" class="card">
+                <h2>Recommended Games</h2>
+                <ul id="recommendationsList">
+                    <li class="recommendation-item">
+                        <h3>Elden Ring</h3>
+                        <p><strong>Genre:</strong> Action RPG</p>
+                        <button class="btn add-btn">Add to List</button>
+                    </li>
+                    <li class="recommendation-item">
+                        <h3>Cyberpunk 2077</h3>
+                        <p><strong>Genre:</strong> Open World RPG</p>
+                        <button class="btn add-btn">Add to List</button>
+                    </li>
+                    <li class="recommendation-item">
+                        <h3>Red Dead Redemption 2</h3>
+                        <p><strong>Genre:</strong> Adventure</p>
+                        <button class="btn add-btn">Add to List</button>
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </div>
 
     <footer>
-        <p>&copy; 2024 Game Database Application. Keep playing and keep slaying!</p>
+        <p>&copy; 2024 XP Vault. Keep exploring and keep gaming!</p>
     </footer>
 </body>
 </html>
+
