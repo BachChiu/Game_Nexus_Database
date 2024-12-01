@@ -53,7 +53,7 @@
     if(isset($_POST["favoriteGameID"]))
     {
         $gameID = intval($_POST["favoriteGameID"]);
-        // $db = getDB();
+        $db = getDB();
         $sql = "SELECT userID, gameID FROM favorite WHERE userID=? AND gameID=?";
         $statement= $db->prepare($sql);
         $statement->bind_param("si", $currentUser, $gameID);
@@ -160,7 +160,7 @@
                 <select id="genre" name="genre">
                     <option value="all">All Genres</option>
                     <?php
-                    // $db = getDB();
+                    $db = getDB();
                     $genreListSql = "SELECT genre FROM genres";
                     $genreList = $db->query($genreListSql);
                     while ($result = $genreList->fetch_assoc()) {
@@ -174,7 +174,7 @@
                 <select id="platform" name="platform">
                     <option value="all">All Platforms</option>
                     <?php
-                    // $db = getDB();
+                    $db = getDB();
                     $platformListSql = "SELECT platform FROM platforms";
                     $platformList = $db->query($platformListSql);
                     while ($result = $platformList->fetch_assoc()) {
@@ -188,7 +188,7 @@
             </form>
         </section>
         <?php
-        // $db = getDB();
+        $db = getDB();
         $searchSql = "SELECT DISTINCT games.gameID, gameName, releaseDate, reviews, rating, descriptions FROM games ";
         echo "
                 <table>
