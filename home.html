@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Database Application</title>
+    <title>XP Vault - Game Database Application</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="moving-background">
     <nav>
         <div class="container">
             <ul>
@@ -22,53 +22,76 @@
         </div>
     </nav>
 
-    <main class="container">
-        <section id="introduction" class="card">
-            <h1>Welcome to the Game Database Application</h1>
-            <p>
-                Our application allows users to find games across all platforms that match their preferences.
-                Use the search feature to filter games by genre, platform, and more. Create an account to save
-                your favorite games and receive personalized recommendations.
-            </p>
-        </section>
+    <header>
+        <h1 class="site-title">XP Vault</h1>
+    </header>
 
-        <section id="register" class="card">
-            <h2>Register</h2>
-            <p>Already have an account? <a href="login.html">Login Here</a>.</p>
-            <form id="registerForm" action="register.php" method="POST">
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <input type="email" id="email" name="email" placeholder="Email" required>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
-                <button type="submit" class="btn">Register</button>
-            </form>
-        </section>
+    <div class="container">
+        <main>
+            <section id="introduction" class="card">
+                <h2>Welcome to XP Vault</h2>
+                <p>
+                    XP Vault is your ultimate game database application. Find games across all platforms that match your preferences.
+                    Use the search feature to filter games by genre, platform, and more. Create an account to save
+                    your favorite games and receive personalized recommendations.
+                </p>
+            </section>
 
-        <section id="search" class="card">
-            <h2>Search for Games</h2>
-            <form id="searchForm" action="/search" method="GET">
-                <input type="text" id="searchBar" name="searchBar" placeholder="Enter game title">
-                <select id="genre" name="genre">
-                    <option value="all">All Genres</option>
-                    <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="rpg">RPG</option>
-                    <option value="strategy">Strategy</option>
-                </select>
-                <select id="platform" name="platform">
-                    <option value="all">All Platforms</option>
-                    <option value="pc">PC</option>
-                    <option value="xbox">Xbox</option>
-                    <option value="playstation">PlayStation</option>
-                    <option value="switch">Nintendo Switch</option>
-                </select>
-                <button type="submit" class="btn">Search</button>
-            </form>
-        </section>
-    </main>
+            <section id="register" class="card">
+                <h2>Register</h2>
+                <p>Already have an account? <a href="login.html">Login Here</a>.</p>
+                <form id="registerForm" action="register.php" method="POST">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                    <button type="submit" class="btn">Register</button>
+                </form>
+            </section>
+
+            <section id="search" class="card">
+                <h2>Search for Games</h2>
+                <form id="searchForm" action="/search" method="GET">
+                    <input type="text" id="searchBar" name="searchBar" placeholder="Enter game title">
+                    <select id="genre" name="genre">
+                        <option value="all">All Genres</option>
+                        <option value="action">Action</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="rpg">RPG</option>
+                        <option value="strategy">Strategy</option>
+                    </select>
+                    <select id="platform" name="platform">
+                        <option value="all">All Platforms</option>
+                        <option value="pc">PC</option>
+                        <option value="xbox">Xbox</option>
+                        <option value="playstation">PlayStation</option>
+                        <option value="switch">Nintendo Switch</option>
+                    </select>
+                    <button type="submit" class="btn">Search</button>
+                </form>
+            </section>
+
+            <section id="gameList" class="card">
+                <h2>Your Game List</h2>
+                <p>Manage the games in your list below:</p>
+                <ul id="userGameList">
+                    <!-- Dynamically generated list of user's games -->
+                </ul>
+                <button id="clearListBtn" class="btn">Clear List</button>
+            </section>
+
+            <section id="recommendations" class="card">
+                <h2>Recommended Games for You</h2>
+                <ul id="recommendationsList">
+                    <!-- Dynamically generated list of recommended games -->
+                </ul>
+            </section>
+        </main>
+    </div>
 
     <footer>
-        <p>&copy; 2024 Game Database Application. All rights reserved.</p>
+        <p>&copy; 2024 XP Vault. All rights reserved.</p>
     </footer>
 </body>
 </html>
+
