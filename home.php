@@ -53,7 +53,7 @@
     if(isset($_POST["favoriteGameID"]))
     {
         $gameID = intval($_POST["favoriteGameID"]);
-        $db = getDB();
+        // $db = getDB();
         $sql = "SELECT userID, gameID FROM favorite WHERE userID=? AND gameID=?";
         $statement= $db->prepare($sql);
         $statement->bind_param("si", $currentUser, $gameID);
@@ -278,24 +278,6 @@
         $db->close();
 
         ?>
-
-        <!-- User's Game List -->
-        <section id="gameList">
-            <h2>Your Game List</h2>
-            <p>Manage the games in your list below:</p>
-            <ul id="userGameList">
-                <!-- Dynamically generated list of user's games -->
-            </ul>
-            <button id="clearListBtn">Clear List</button>
-        </section>
-
-        <!-- Recommendations -->
-        <section id="recommendations">
-            <h2>Recommended Games for You</h2>
-            <ul id="recommendationsList">
-                <!-- Dynamically generated list of recommended games -->
-            </ul>
-        </section>
 
         <!-- Footer -->
         <footer>
