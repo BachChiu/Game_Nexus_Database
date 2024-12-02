@@ -23,6 +23,16 @@ body {
   line-height: 1.6;
 }
 
+#register a {
+  color: white; /* Makes the "Login Here" text white */
+  text-decoration: underline; /* Optional: Add underline for better visibility */
+}
+
+#register a:hover {
+  color: var(--accent-color); /* Optional: Add a hover effect */
+}
+
+
 .container {
   width: 90%;
   max-width: 1200px;
