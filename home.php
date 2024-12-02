@@ -3,7 +3,9 @@ session_start();
 require('./common.php');
 if (isset($_SESSION['user_authentication']) and $_SESSION['user_authentication'] != '') {
     $currentUser = $_SESSION['user_authentication'];
+    $validUser = true;
 } else {
+    $validUser = false;
     $currentUser = '';
 }
 if (isset($_POST["genre"]) and $_POST["genre"] != '') {
@@ -34,11 +36,21 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
     $searchAvailable = true;
     $searchBar = (string) $_POST["searchBar"];
 } else {
+    $searchBar = '';
     $searchAvailable = false;
 }
-if(isset($_POST["favoriteGameID"]))
+if(isset($_POST["favoriteGameName"]))
 {
-    $gameID = intval($_POST["favoriteGameID"]);
+    $gameTitle = $_POST["favoriteGameName"];
+    $db1 = getDB();
+    $gameSql = "SELECT MIN(gameID) AS gameID FROM games WHERE gameName=?";
+    $getGame = $db1->prepare($gameSql);
+    $getGame->bind_param("s", $gameTitle);
+    $getGame->execute();
+    $gameIDIntermediate = $getGame->get_result();
+    $gameIDResult = $gameIDIntermediate->fetch_assoc();
+    $gameID =$gameIDResult["gameID"];
+    $db1->close();
     $db = getDB();
     $sql = "SELECT userID, gameID FROM favorite WHERE userID=? AND gameID=?";
     $statement= $db->prepare($sql);
@@ -72,14 +84,14 @@ if(isset($_POST["favoriteGameID"]))
 
 <body>
     <div id="homeContent">
-        <?php if(isset($_POST["favoriteGameID"]) AND $added)
+        <?php if(isset($_POST["favoriteGameName"]) AND $added)
         {
-            unset($_POST["favoriteGameID"]);
+            unset($_POST["favoriteGameName"]);
             echo "<script>alert('Game has been added to your game list.');</script>";
         }
-        else if(isset($_POST["favoriteGameID"]))
+        else if(isset($_POST["favoriteGameName"]))
         {
-            unset($_POST["favoriteGameID"]);
+            unset($_POST["favoriteGameName"]);
             echo "<script>alert('This game is already in your game list.');</script>";
         }?>
         <!-- Navigation bar-->
@@ -89,7 +101,6 @@ if(isset($_POST["favoriteGameID"]))
                 <li><a href="personalGames.php">My Games List</a></li>
                 <li><a href="recomm.php">Recommendations</a></li>
                 <li><a href="profile.php">Profile</a></li>
-                <input type="text" placeholder="Search Games...">
             </ul>
         </nav>
 
@@ -106,6 +117,8 @@ if(isset($_POST["favoriteGameID"]))
         </main>
 
         <!-- User Registration -->
+        <?php if(!$validUser): ?>
+        <!-- User Registration -->
         <section id="register">
             <h2>Register</h2>
             <p>Already have an account? <a href="login.php">Login Here</a>.</p>
@@ -114,18 +127,24 @@ if(isset($_POST["favoriteGameID"]))
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
                 <label for="passConfirmation">Confirm Password:</label>
                 <input type="password" id="passConfirmation" name="passConfirmation" required>
+                <span id="passwordError" class="error"></span>
 
-
-                <button type="submit">Register</button>
+                <button type="submit" class="submit" id="submit">Register</button>
             </form>
+            <?php else: ?>
+                <br>
+                <!-- Welcome message for logged in users -->
+                 <h3>Welcome back, <?php echo htmlspecialchars($currentUser); ?>!</h3>
+                 <br>
+                 <form id="logoutForm" action="logout.php" method="POST">
+                    <button type="submit">Log out</button>
+                 </form>
+                <?php endif; ?>
         </section>
 
         <!-- Game Search -->
@@ -168,7 +187,7 @@ if(isset($_POST["favoriteGameID"]))
         </section>
         <?php
         $db = getDB();
-        $searchSql = "SELECT DISTINCT games.gameID, gameName, releaseDate, reviews, rating, descriptions FROM games ";
+        $searchSql = "SELECT DISTINCT gameName, releaseDate, reviews, rating, descriptions FROM games ";
         echo "
                 <table>
                     <tr>
@@ -219,7 +238,7 @@ if(isset($_POST["favoriteGameID"]))
             }
         } else {
             if ($allGenre and $allPlatform) {
-                $searchSql .= " ORDER BY reviews DESC, rating DESC, releaseDate DESC LIMIT 10000";//Limited due to memory issue
+                $searchSql .= " ORDER BY reviews DESC, rating DESC, releaseDate DESC LIMIT 1000";//Limited due to memory issue
                 $gameList = $db->query($searchSql);
                 while ($result = $gameList->fetch_assoc()) {
                     printGame($result);
@@ -305,7 +324,7 @@ if(isset($_POST["favoriteGameID"]))
                 $.ajax({
                     url: 'home.php',
                     method: 'POST',
-                    data: {favoriteGameID: buttonID,
+                    data: {favoriteGameName: buttonID,
                         genre: "<?php echo $genreFilter; ?>",
                         platform: "<?php echo $platformFilter; ?>",
                         searchBar: "<?php echo $searchBar; ?>"

@@ -1,7 +1,7 @@
 <?php
 function getDB()
 {
-    //Implementation hidden due to sensitive data, the program works on the actual hosted site (http://75.40.51.27/Game_Nexus_Database/home.php)
+    //Hidden implementation due to sensitive data, to use the site go here http://75.40.51.27/Game_Nexus_Database/home.php.
 }
 function checkUser($userToBeCheck)
 {
@@ -42,8 +42,8 @@ function printGame($inputRow)
         <td>". $inputRow["releaseDate"]."</td>
         <td>". $inputRow["reviews"]."</td>
         <td>". $inputRow["rating"]."</td>
-        <td>". $inputRow["descriptions"]."</td>
-        <td><button class='btn favoriteBtn' name='favoriteGameID' value=". $inputRow["gameID"].">Add to your game list</button></td>
-    </tr>";
+        <td>". $inputRow["descriptions"]."</td>";
+        echo '<td><button class="btn favoriteBtn" name="favoriteGameName" value="'. $inputRow["gameName"].'">Add to your game list</button></td>
+    </tr>';
 }
 ?>
