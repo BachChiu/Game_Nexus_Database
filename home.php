@@ -105,7 +105,6 @@
                 <li><a href="contentcreator.php">Content Creators</a></li>
                 <li><a href="recomm.php">Recommendations</a></li>
                 <li><a href="profile.php">Profile</a></li>
-                <input type="text" placeholder="Search Games...">
             </ul>
         </nav>
 

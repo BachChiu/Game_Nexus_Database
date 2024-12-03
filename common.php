@@ -54,6 +54,19 @@ function printGame($inputRow)
         <th>". $inputRow["reviews"]."</th>
         <th>". $inputRow["rating"]."</th>
         <th>". $inputRow["descriptions"]."</th>
+        <td><button class='btn favoriteBtn' name='favoriteGameName' value=". $inputRow["gameName"].">Add to your game list</button></td>
     </tr>";
 }
+
+function printCreator($inputRow) {
+    echo "
+        <tr>
+            <td>{$inputRow['creatorName']}</td>
+            <td>{$inputRow['platforms']}</td>
+            <td>{$inputRow['genres']}</td>
+            <td>{$inputRow['games']}</td>
+            <td><button class='btn favoriteBtn' name='favoriteCreator' value=". $inputRow["creatorName"].">Add to your game list</button></td>
+        </tr>";
+}
+?>
 ?>
