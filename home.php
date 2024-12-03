@@ -39,8 +39,7 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
     $searchBar = '';
     $searchAvailable = false;
 }
-if(isset($_POST["favoriteGameName"]))
-{
+if (isset($_POST["favoriteGameName"])) {
     $gameTitle = $_POST["favoriteGameName"];
     $db1 = getDB();
     $gameSql = "SELECT MIN(gameID) AS gameID FROM games WHERE gameName=?";
@@ -49,26 +48,23 @@ if(isset($_POST["favoriteGameName"]))
     $getGame->execute();
     $gameIDIntermediate = $getGame->get_result();
     $gameIDResult = $gameIDIntermediate->fetch_assoc();
-    $gameID =$gameIDResult["gameID"];
+    $gameID = $gameIDResult["gameID"];
     $db1->close();
     $db = getDB();
     $sql = "SELECT userID, gameID FROM favorite WHERE userID=? AND gameID=?";
-    $statement= $db->prepare($sql);
+    $statement = $db->prepare($sql);
     $statement->bind_param("si", $currentUser, $gameID);
     $statement->execute();
-    $intermediate= $statement->get_result();
+    $intermediate = $statement->get_result();
     $result = $intermediate->fetch_assoc();
     $added = false;
-    if(!$result)
-    {
+    if (!$result) {
         $addToFavorite = "INSERT INTO favorite (userID, gameID) VALUES (?,?)";
         $favoriteStatement = $db->prepare($addToFavorite);
         $favoriteStatement->bind_param("si", $currentUser, $gameID);
         $favoriteStatement->execute();
         $added = true;
-    }
-    else
-    {
+    } else {
         $added = false;
     }
     $db->close();
@@ -78,36 +74,38 @@ if(isset($_POST["favoriteGameName"]))
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>Game Database Application</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
-    <div id="homeContent">
-        <?php if(isset($_POST["favoriteGameName"]) AND $added)
-        {
+<body class="moving-background">
+    <div id="homeContent" class="container">
+        <?php if (isset($_POST["favoriteGameName"]) and $added) {
             unset($_POST["favoriteGameName"]);
             echo "<script>alert('Game has been added to your game list.');</script>";
-        }
-        else if(isset($_POST["favoriteGameName"]))
-        {
+        } else if (isset($_POST["favoriteGameName"])) {
             unset($_POST["favoriteGameName"]);
             echo "<script>alert('This game is already in your game list.');</script>";
-        }?>
+        } ?>
         <!-- Navigation bar-->
         <nav>
-            <ul>
-                <li><a href="home.php">Home</a></li>
-                <li><a href="personalGames.php">My Games List</a></li>
-                <li><a href="recomm.php">Recommendations</a></li>
-                <li><a href="profile.php">Profile</a></li>
-            </ul>
+            <div class="container">
+                <ul>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="personalGames.php">My Games List</a></li>
+                    <li><a href="contentcreator.php">Content Creators</a></li>
+                    <li><a href="recomm.php">Recommendations</a></li>
+                    <li><a href="profile.php">Profile</a></li>
+                </ul>
+            </div>
         </nav>
 
         <!-- Main Section-->
         <main>
-            <section id="introduction">
-                <h1>Welcome to the Game Database Application</h1>
+            <section id="introduction" class="card">
+                <h1 class="site-title">Game Nexus Database</h1>
                 <p>
                     Our application allows users to find games across all platforms that match their preferences.
                     Use the search feature to filter games by genre, platform, and more. Create an account to save
@@ -117,38 +115,43 @@ if(isset($_POST["favoriteGameName"]))
         </main>
 
         <!-- User Registration -->
-        <?php if(!$validUser): ?>
-        <!-- User Registration -->
-        <section id="register">
-            <h2>Register</h2>
-            <p>Already have an account? <a href="login.php">Login Here</a>.</p>
+        <?php if (!$validUser): ?>
+            <!-- User Registration -->
+            <section id="register" class="card">
+                <h2>Register</h2>
+                <p>Already have an account? <a href="login.php">Login Here</a>.</p>
 
-            <form id="registerForm" action="register.php" method="POST">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <form id="registerForm" action="register.php" method="POST">
+                    <?php
+                    if (isset($_SESSION['error'])) {
+                        echo "<p style=\"color:red;\">" . $_SESSION['error'] . "</p>";
+                        unset($_SESSION['error']);
+                    }
+                    ?>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
 
-                <label for="passConfirmation">Confirm Password:</label>
-                <input type="password" id="passConfirmation" name="passConfirmation" required>
-                <span id="passwordError" class="error"></span>
+                    <label for="passConfirmation">Confirm Password:</label>
+                    <input type="password" id="passConfirmation" name="passConfirmation" required>
+                    <span id="passwordError" class="error"></span>
 
-                <button type="submit" class="submit" id="submit">Register</button>
-            </form>
+                    <button type="submit" class="btn" class="submit" id="submit">Register</button>
+                </form>
             <?php else: ?>
                 <br>
                 <!-- Welcome message for logged in users -->
-                 <h3>Welcome back, <?php echo htmlspecialchars($currentUser); ?>!</h3>
-                 <br>
-                 <form id="logoutForm" action="logout.php" method="POST">
-                    <button type="submit">Log out</button>
-                 </form>
-                <?php endif; ?>
+                <form id="logoutForm" action="logout.php" method="POST" class="card">
+                    <h3>Welcome back, <?php echo htmlspecialchars($currentUser); ?>!</h3>
+                    <button type="submit" class="btn">Log out</button>
+                </form>
+            <?php endif; ?>
         </section>
 
         <!-- Game Search -->
-        <section id="search">
+        <section id="search" class="card">
             <h2>Search for Games</h2>
             <form id="searchForm" method="POST">
                 <label for="searchBar">Search by Title:</label>
@@ -182,7 +185,7 @@ if(isset($_POST["favoriteGameName"]))
                     ?>
                 </select>
 
-                <button type="submit">Search</button>
+                <button type="submit" class="btn">Search</button>
             </form>
         </section>
         <?php
@@ -276,25 +279,6 @@ if(isset($_POST["favoriteGameName"]))
         $db->close();
 
         ?>
-
-        <!-- User's Game List -->
-        <section id="gameList">
-            <h2>Your Game List</h2>
-            <p>Manage the games in your list below:</p>
-            <ul id="userGameList">
-                <!-- Dynamically generated list of user's games -->
-            </ul>
-            <button id="clearListBtn">Clear List</button>
-        </section>
-
-        <!-- Recommendations -->
-        <section id="recommendations">
-            <h2>Recommended Games for You</h2>
-            <ul id="recommendationsList">
-                <!-- Dynamically generated list of recommended games -->
-            </ul>
-        </section>
-
         <!-- Footer -->
         <footer>
             <p>&copy; 2024 Game Database Application. All rights reserved.</p>
@@ -318,13 +302,13 @@ if(isset($_POST["favoriteGameName"]))
                     }
                 });
             });
-            $('.favoriteBtn').click(function (event)
-            {
+            $('.favoriteBtn').click(function (event) {
                 var buttonID = $(this).val();
                 $.ajax({
                     url: 'home.php',
                     method: 'POST',
-                    data: {favoriteGameName: buttonID,
+                    data: {
+                        favoriteGameName: buttonID,
                         genre: "<?php echo $genreFilter; ?>",
                         platform: "<?php echo $platformFilter; ?>",
                         searchBar: "<?php echo $searchBar; ?>"
@@ -332,8 +316,7 @@ if(isset($_POST["favoriteGameName"]))
                     success: function (response) {
                         $('#homeContent').html(response);
                     },
-                    error: function (xhr, status, error)
-                    {
+                    error: function (xhr, status, error) {
                         console.error('AJAX Error: ' + error);
                     }
                 });

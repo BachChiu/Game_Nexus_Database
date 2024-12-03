@@ -17,11 +17,22 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: var(--background-color) url('https://img.freepik.com/free-vector/modern-polygon-technology-background_1035-17923.jpg?semt=ais_hybrid')  no-repeat center center fixed;
+  background: var(--background-color) url('https://images.pexels.com/photos/3612932/pexels-photo-3612932.jpeg?auto=compress&cs=tinysrgb&w=800')  no-repeat center center fixed;
   background-size: cover;
   color: var(--text-color);
   line-height: 1.6;
 }
+
+a {
+  color: white; /* Makes the "Login Here" text white */
+  text-decoration: underline; /* Optional: Add underline for better visibility */
+}
+
+a:hover {
+  color: var(--accent-color); /* Optional: Add a hover effect */
+}
+
+
 
 .container {
   width: 90%;
@@ -137,6 +148,16 @@ nav ul li a:hover {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.card2
+{
+  background: linear-gradient(135deg, #00060c 30%, #1b3b5b 70%);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 191, 255, 0.3);
@@ -154,6 +175,7 @@ nav ul li a:hover {
 
 .btn:hover {
   background-color: var(--primary-color);
+  cursor: pointer;
 }
 
 form {
@@ -190,4 +212,11 @@ footer {
     width: 100%;
     margin-top: 10px;
   }
+}
+table, th, td {
+  padding:5px;
+  border: 1px solid white;
+  border-collapse: collapse;
+  border-spacing: 20px;
+  background-color: black;
 }
