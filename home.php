@@ -4,7 +4,12 @@ require('./common.php');
 if (isset($_SESSION['user_authentication']) and $_SESSION['user_authentication'] != '') {
     $currentUser = $_SESSION['user_authentication'];
     $validUser = true;
+    if (isset($_POST["favoriteGameName"])) {
+        $gameTitle = $_POST["favoriteGameName"];
+        $added = addToFavoriteList($gameTitle,$currentUser);
+    }
 } else {
+    $added = false;
     $validUser = false;
     $currentUser = '';
 }
@@ -39,56 +44,31 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
     $searchBar = '';
     $searchAvailable = false;
 }
-if (isset($_POST["favoriteGameName"])) {
-    $gameTitle = $_POST["favoriteGameName"];
-    $db1 = getDB();
-    $gameSql = "SELECT MIN(gameID) AS gameID FROM games WHERE gameName=?";
-    $getGame = $db1->prepare($gameSql);
-    $getGame->bind_param("s", $gameTitle);
-    $getGame->execute();
-    $gameIDIntermediate = $getGame->get_result();
-    $gameIDResult = $gameIDIntermediate->fetch_assoc();
-    $gameID = $gameIDResult["gameID"];
-    $db1->close();
-    $db = getDB();
-    $sql = "SELECT userID, gameID FROM favorite WHERE userID=? AND gameID=?";
-    $statement = $db->prepare($sql);
-    $statement->bind_param("si", $currentUser, $gameID);
-    $statement->execute();
-    $intermediate = $statement->get_result();
-    $result = $intermediate->fetch_assoc();
-    $added = false;
-    if (!$result) {
-        $addToFavorite = "INSERT INTO favorite (userID, gameID) VALUES (?,?)";
-        $favoriteStatement = $db->prepare($addToFavorite);
-        $favoriteStatement->bind_param("si", $currentUser, $gameID);
-        $favoriteStatement->execute();
-        $added = true;
-    } else {
-        $added = false;
-    }
-    $db->close();
-}
 
 ?>
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <title>Game Database Application</title>
+    <title>Game Nexus</title>
     <link rel="stylesheet" href="styles2.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body class="moving-background">
     <div id="homeContent" class="container">
-        <?php if (isset($_POST["favoriteGameName"]) and $added) {
+        <?php if (isset($_POST["favoriteGameName"]) AND $added AND $validUser) {
             unset($_POST["favoriteGameName"]);
             echo "<script>alert('Game has been added to your game list.');</script>";
-        } else if (isset($_POST["favoriteGameName"])) {
+        } else if (isset($_POST["favoriteGameName"]) AND $validUser){
             unset($_POST["favoriteGameName"]);
             echo "<script>alert('This game is already in your game list.');</script>";
-        } ?>
+        }
+        else if(isset($_POST["favoriteGameName"]))
+        {
+            unset($_POST["favoriteGameName"]);
+            echo "<script>alert('You need to login to be able to add game to your own personal game list.');</script>";
+        }?>
         <!-- Navigation bar-->
         <nav>
             <div class="container">

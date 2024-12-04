@@ -3,11 +3,12 @@ session_start();
 require('./common.php');
 if (isset($_SESSION['user_authentication']) and $_SESSION['user_authentication'] != '') {
     $currentUser = $_SESSION['user_authentication'];
+    $errorMessage = false;
     if (isset($_SESSION['error'])) {
-        echo "<p style=\"color:red;\">" . $_SESSION['error'] . "</p>";
-        unset($_SESSION['error']);
+        $errorMessage = true;
     }
 } else {
+    $errorMessage = false;
     $currentUser = '';
     $_SESSION['error'] = 'Please login to access your account profile.';
     header('Location: ./login.php');
@@ -28,7 +29,7 @@ if (isset($_POST["creatorID"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaming Profile</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="styles2.css">
 </head>
 
@@ -49,6 +50,11 @@ if (isset($_POST["creatorID"])) {
         <div class="profile-container">
             <div class="profile-sidebar card">
                 <h1><?= $currentUser ?></h1>
+                <?php if($errorMessage)
+                {
+                    echo "<p style=\"color:red;\">" . $_SESSION['error'] . "</p>";
+                    unset($_SESSION['error']);
+                }?>
 
                 <form id="updatePassword" action="updatePassword.php" method="POST">
                     <label for="oldPassword">Current Password:</label>
@@ -71,16 +77,11 @@ if (isset($_POST["creatorID"])) {
                     <h2>Favorite Genres</h2>
                     <div class="game-preferences">
                         <?php
-                        $db = getDB();
-                        $sql = "SELECT genre, COUNT(*) AS genreCount FROM favorite JOIN games ON favorite.gameID = games.gameID 
-                        JOIN classified_as ON favorite.gameID = classified_as.gameID WHERE userID = ? GROUP BY genre ORDER BY genreCount DESC LIMIT 3";
-                        $statement = $db->prepare($sql);
-                        $statement->bind_param("s", $currentUser);
-                        $statement->execute();
-                        $intermediate = $statement->get_result();
-                        while ($result = $intermediate->fetch_assoc()) { ?>
+                        $intermediate = genrePreference($currentUser);
+                        $limit = 3;
+                        while ($result = $intermediate->fetch_assoc() AND $limit != 0) { ?>
                             <span class="preference-tag"><?= $result["genre"] ?>&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                        <?php }
+                            <?php $limit -= 1;}
                         ?>
                     </div>
                 </section>
@@ -89,13 +90,7 @@ if (isset($_POST["creatorID"])) {
                     <h2>Gaming Platforms</h2>
                     <div class="game-preferences">
                         <?php
-                        $db = getDB();
-                        $sql = "SELECT platform, COUNT(*) AS platformCount FROM favorite JOIN games ON favorite.gameID = games.gameID JOIN available_on ON favorite.gameID = available_on.gameID WHERE userID =?
-                        GROUP BY platform ORDER BY platformCount DESC";
-                        $statement = $db->prepare($sql);
-                        $statement->bind_param("s", $currentUser);
-                        $statement->execute();
-                        $intermediate = $statement->get_result();
+                        $intermediate = platformPreference($currentUser);
                         while ($result = $intermediate->fetch_assoc()) { ?>
                             <span class="preference-tag"><?= $result["platform"] ?>&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                         <?php }

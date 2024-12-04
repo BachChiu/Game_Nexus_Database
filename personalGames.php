@@ -43,13 +43,13 @@ if (isset($_POST["gameID"])) {
     </nav>
 
     <main class="container">
-        <section id="gamesSection" class="card">
+        <section id="gamesSection" class="card2">
             <h1>My Games List</h1>
             <p style="color:white">Your curated list of games. Manage your favorites, track progress, and get updates on
                 games you love.</p>
             <br>
             <h2>Your Games</h2>
-            <form id="gamesListForm" method="POST">
+            <form id="gamesListForm" class="card" method="POST">
                 <ul id="gamesList">
                     <?php
                     $db = getDB();
@@ -63,8 +63,8 @@ if (isset($_POST["gameID"])) {
                     $result = $statement->get_result();
                     while ($row = $result->fetch_assoc()) {
                         echo "<li class='game-item'>
-                            <p><h4>" . $row["gameName"] . "</h4><strong>Genre:</strong>" . $row["genres"] . "<br>
-                            <strong>Platform:</strong>" . $row["platforms"] . "</p>
+                            <p><h4>" . $row["gameName"] . "</h4><strong>Genre: </strong>" . $row["genres"] . "<br>
+                            <strong>Platform: </strong>" . $row["platforms"] . "</p>
                             <button class='btn remove-btn' type='submit' name='gameID' value=" . $row["gameID"] . ">Remove</button>
                         </li><br>";
                     }
