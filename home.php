@@ -42,9 +42,9 @@ if (isset($_POST["searchBar"]) and $_POST["searchBar"] != '') {
 if (isset($_POST["favoriteGameName"])) {
     $gameTitle = $_POST["favoriteGameName"];
     $db1 = getDB();
-    $gameSql = "SELECT MIN(gameID) AS gameID FROM games WHERE gameName=?";
+    $gameSql = "SELECT gameID FROM games WHERE gameName = ? AND reviews = (SELECT MAX(reviews) FROM games WHERE gameName = ?);"; //Due to weird data that seems to account for different version of the same game, we opted for this for standardization.
     $getGame = $db1->prepare($gameSql);
-    $getGame->bind_param("s", $gameTitle);
+    $getGame->bind_param("ss", $gameTitle,$gameTitle);
     $getGame->execute();
     $gameIDIntermediate = $getGame->get_result();
     $gameIDResult = $gameIDIntermediate->fetch_assoc();
@@ -75,7 +75,7 @@ if (isset($_POST["favoriteGameName"])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Game Database Application</title>
+    <title>Game Nexus</title>
     <link rel="stylesheet" href="styles2.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

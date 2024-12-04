@@ -53,7 +53,7 @@ if (isset($_POST["creatorName"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaming Profile</title>
+    <title>Content Creator List</title>
     <link rel="stylesheet" href="styles2.css">
 </head>
 
@@ -72,7 +72,7 @@ if (isset($_POST["creatorName"])) {
                     <li><a href="home.php">Home</a></li>
                     <li><a href="personalGames.php">My Games List</a></li>
                     <li><a href="contentcreator.php">Content Creators</a></li>
-                    <li><a href="recomm.html">Recommendations</a></li>
+                    <li><a href="recomm.php">Recommendations</a></li>
                     <li><a href="profile.php">Profile</a></li>
                 </ul>
             </div>
@@ -116,45 +116,6 @@ if (isset($_POST["creatorName"])) {
                             <th>Games</th>
                             <th></th>
                         </tr>";
-
-            // table filters
-            // if ($searchAvailable && $genreAvailable) {
-            //     if ($allGenre) {
-            //         // When "All Genres" is selected
-            //         $searchSql .= " WHERE cc.creatorName LIKE CONCAT('%', ? ,'%') ORDER BY cc.creatorName ASC";
-            //         $statement = $db->prepare($searchSql);
-            //         $statement->bind_param("s", $searchBar);
-            //     } else {
-            //         // When a specific genre is selected
-            //         $searchSql .= " WHERE cc.creatorName LIKE CONCAT('%', ? ,'%') AND ca.genre = ? ORDER BY cc.creatorName ASC";
-            //         $statement = $db->prepare($searchSql);
-            //         $statement->bind_param("ss", $searchBar, $genreFilter);
-            //     }
-            //     $statement->execute();
-            //     $creatorList = $statement->get_result();
-            //     while ($result = $creatorList->fetch_assoc()) {
-            //         printCreator($result);
-            //     }
-            // } else {
-            //     if ($allGenre) {
-            //         // No search, but "All Genres" is selected
-            //         $searchSql .= " ORDER BY cc.creatorName ASC LIMIT 10000";
-            //         $creatorList = $db->query($searchSql);
-            //         while ($result = $creatorList->fetch_assoc()) {
-            //             printCreator($result);
-            //         }
-            //     } else {
-            //         // No search and a specific genre is selected
-            //         $searchSql .= " WHERE ca.genre = ? ORDER BY cc.creatorName ASC";
-            //         $statement = $db->prepare($searchSql);
-            //         $statement->bind_param("s", $genreFilter);
-            //         $statement->execute();
-            //         $creatorList = $statement->get_result();
-            //         while ($result = $creatorList->fetch_assoc()) {
-            //             printCreator($result);
-            //         }
-            //     }
-            // }
             
             if ($searchAvailable) {
                 $searchSql .= " WHERE cc.creatorName LIKE CONCAT('%', ?, '%') GROUP BY cc.creatorname
