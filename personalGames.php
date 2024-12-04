@@ -63,8 +63,8 @@ if (isset($_POST["gameID"])) {
                     $result = $statement->get_result();
                     while ($row = $result->fetch_assoc()) {
                         echo "<li class='game-item'>
-                            <p><h4>" . $row["gameName"] . "</h4><strong>Genre:</strong>" . $row["genres"] . "<br>
-                            <strong>Platform:</strong>" . $row["platforms"] . "</p>
+                            <p><h4>" . $row["gameName"] . "</h4><strong>Genre: </strong>" . $row["genres"] . "<br>
+                            <strong>Platform: </strong>" . $row["platforms"] . "</p>
                             <button class='btn remove-btn' type='submit' name='gameID' value=" . $row["gameID"] . ">Remove</button>
                         </li><br>";
                     }

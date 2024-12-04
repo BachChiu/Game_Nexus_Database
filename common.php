@@ -1,7 +1,7 @@
 <?php
 function getDB()
 {
-    //Hidden implementation due to sensitive data, access site at http://75.40.51.27/Game_Nexus_Database/home.php
+    //Hidden implementation due to sensitive data;
 }
 function checkUser($userToBeCheck)
 {
@@ -174,8 +174,35 @@ function followListPublisherPreference($currentUser)
     $db->close();
     return $intermediate;
 }
-function addQuote($text)
+function addToFavoriteList($gameTitle, $currentUser)
 {
-    return("\"". $text ."\"");
+    $db1 = getDB();
+    $gameSql = "SELECT gameID FROM games WHERE gameName = ? AND reviews = (SELECT MAX(reviews) FROM games WHERE gameName = ?);"; //Due to weird data that seems to account for different version of the same game, we opted for this for standardization.
+    $getGame = $db1->prepare($gameSql);
+    $getGame->bind_param("ss", $gameTitle, $gameTitle);
+    $getGame->execute();
+    $gameIDIntermediate = $getGame->get_result();
+    $gameIDResult = $gameIDIntermediate->fetch_assoc();
+    $gameID = $gameIDResult["gameID"];
+    $db1->close();
+    $db = getDB();
+    $sql = "SELECT userID, gameID FROM favorite WHERE userID=? AND gameID=?";
+    $statement = $db->prepare($sql);
+    $statement->bind_param("si", $currentUser, $gameID);
+    $statement->execute();
+    $intermediate = $statement->get_result();
+    $result = $intermediate->fetch_assoc();
+    $added = false;
+    if (!$result) {
+        $addToFavorite = "INSERT INTO favorite (userID, gameID) VALUES (?,?)";
+        $favoriteStatement = $db->prepare($addToFavorite);
+        $favoriteStatement->bind_param("si", $currentUser, $gameID);
+        $favoriteStatement->execute();
+        $added = true;
+    } else {
+        $added = false;
+    }
+    $db->close();
+    return $added;
 }
 ?>
