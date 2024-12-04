@@ -52,23 +52,28 @@ if (isset($_POST["gameID"])) {
             <form id="gamesListForm" class="card" method="POST">
                 <ul id="gamesList">
                     <?php
-                    $db = getDB();
-                    $sql = "SELECT DISTINCT favorite.gameID, games.gameName, GROUP_CONCAT(DISTINCT classified_as.genre SEPARATOR ', ') as 'genres',
+                    if (countFavorite($currentUser) == 0) {
+                        echo "You currently have no game in your favorite list
+                        Go<a href='home.php'> here </a>to search for game to add to your favorite list";
+                    } else {
+                        $db = getDB();
+                        $sql = "SELECT DISTINCT favorite.gameID, games.gameName, GROUP_CONCAT(DISTINCT classified_as.genre SEPARATOR ', ') as 'genres',
                     GROUP_CONCAT(DISTINCT available_on.platform SEPARATOR ', ') AS 'platforms' FROM favorite LEFT JOIN games ON
                     favorite.gameID = games.gameID LEFT JOIN classified_as ON games.gameID = classified_as.gameID
                     LEFT JOIN available_on ON classified_as.gameID = available_on.gameID WHERE userID = ? GROUP BY favorite.gameID, games.gameName";
-                    $statement = $db->prepare($sql);
-                    $statement->bind_param("s", $currentUser);
-                    $statement->execute();
-                    $result = $statement->get_result();
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<li class='game-item'>
+                        $statement = $db->prepare($sql);
+                        $statement->bind_param("s", $currentUser);
+                        $statement->execute();
+                        $result = $statement->get_result();
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<li class='game-item'>
                             <p><h4>" . $row["gameName"] . "</h4><strong>Genre: </strong>" . $row["genres"] . "<br>
                             <strong>Platform: </strong>" . $row["platforms"] . "</p>
                             <button class='btn remove-btn' type='submit' name='gameID' value=" . $row["gameID"] . ">Remove</button>
                         </li><br>";
+                        }
+                        $db->close();
                     }
-                    $db->close();
                     ?>
                 </ul>
 

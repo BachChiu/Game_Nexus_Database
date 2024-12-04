@@ -193,7 +193,7 @@ if (isset($_SESSION['user_authentication']) and $_SESSION['user_authentication']
     </main>
 
     <footer>
-        <p>&copy; 2024 XP Vault. Keep exploring and keep gaming!</p>
+        <p>&copy; 2024 Game Nexus. Keep exploring and keep gaming!</p>
     </footer>
 </body>
 
