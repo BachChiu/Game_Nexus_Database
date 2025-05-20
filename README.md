@@ -1,2 +1,2 @@
 # Game Nexus Database
-# Accessible at http://75.40.51.27/Game_Nexus_Database/home.php (unless server is down).
+# Accessible at http://chapt.duckdns.org/Game_Nexus_Database/home.php (unless server is down).
